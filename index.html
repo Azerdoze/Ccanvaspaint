@@ -19,14 +19,17 @@
         document.addEventListener("DOMContentLoaded", () => {
             const canvas = document.querySelector("canvas");
             const canvasCtx = canvas.getContext("2d");
-
+            
+            let clicking = false;
+            
             canvas.addEventListener("mousedown", (event) => {
-
+                
                 const canvasX = event.pageX - canvas.offsetLeft;
                 const canvasY = event.pageY - canvas.offsetTop;
                 
-                canvasCtx.beginPath();
+                clicking = true;
                 
+                canvasCtx.beginPath();
                 canvasCtx.moveTo(canvasX, canvasY);
             });
             
@@ -34,11 +37,15 @@
                 const canvasX = event.pageX - canvas.offsetLeft;
                 const canvasY = event.pageY - canvas.offsetTop;
                 
-                canvasCtx.lineTo(canvasX, canvasY);
-                canvasCtx.stroke();
+                if(clicking) {
+                    canvasCtx.lineTo(canvasX, canvasY);
+                    canvasCtx.stroke();
+                }
             });
             
-            canvas.addEventListener("mouseup", (event) => {});
+            canvas.addEventListener("mouseup", (event) => {
+                clicking = false;
+            });
             
             canvas.addEventListener("mouseout", (event) => {});
         })
@@ -47,7 +54,7 @@
 <body>
     <main>
         <canvas width="900" height="900">
-
+            
         </canvas>
     </main>
 </body>
